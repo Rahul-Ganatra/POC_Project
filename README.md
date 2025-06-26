@@ -6,9 +6,8 @@
 
 > **Watch a 5–10 minute walkthrough of the app running on a development server:**
 >
-> [![Demo Video](https://img.youtube.com/vi/YOUR_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/watch?v=YOUR_VIDEO_ID_HERE)
+> [![Demo Video](https://www.loom.com/share/4f4272365a81478d8d77541158c0a1e6?sid=101d484b-1cb6-4bfa-ac57-ea440b2b0702)](https://www.loom.com/share/4f4272365a81478d8d77541158c0a1e6?sid=101d484b-1cb6-4bfa-ac57-ea440b2b0702)
 >
-> _Replace the above link with your actual demo video URL!_
 
 ---
 
@@ -23,13 +22,18 @@
 - **Data:** CSV files (books, tags, ratings, etc.) in `/data`
 
 **Architecture Diagram:**
-```
-[User]
-   │
-   ▼
-[Next.js Frontend] ──▶ [API Route] ──▶ [Neo4j Database]
-   │                                 ▲
-   └───────────────▶ [Graph/Table UI]│
+
+```mermaid
+graph TD;
+  subgraph Data_Upload["CSV Data Upload"]
+    CSV["CSV Files<br/>(/data)"] -->|"Read & Process"| Backend["Backend Python Script<br/>(upload_to_neo4js.py)"]
+    Backend -->|"Cypher Queries"| Neo4j["Neo4j Database"]
+  end
+  User["User (Browser)"] -->|Interacts| Frontend["Next.js Frontend<br/>(Table/Graph UI)"]
+  Frontend -->|API Calls| API["Next.js API Route"]
+  API -->|Cypher Queries| Neo4j
+  Neo4j -- Data/Results --> API
+  API -- JSON --> Frontend
 ```
 
 ---
@@ -45,7 +49,7 @@
 
 #### a. Clone the repository
 ```bash
-git clone https://github.com/yourusername/POC_Project.git
+git clone https://github.com/Rahul-Ganatra/POC_Project.git
 cd POC_Project
 ```
 
@@ -102,3 +106,7 @@ Visit [http://localhost:3000](http://localhost:3000) in your browser.
 ---
 
 > _For questions or contributions, please open an issue or pull request!_
+
+---
+
+<p align="center">Made with ❤️ by Rahul Jignesh Ganatra</p>
